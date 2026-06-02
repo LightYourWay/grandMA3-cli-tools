@@ -1,35 +1,23 @@
-// make ma a globally avaliable variable
-declare var ma: any;
-ma = {};
+import * as maModule from './ma';
 
-// import cli and make cmds a globally avaliable subdomain of ma
-import { cli } from './modules/cli';
-ma.cli = cli;
-
-// import utils and hooking them into the global ma variable
-import * as utils from './modules/utils';
-ma.utils = utils;
-
-// import ui and hooking them into the global ma variable
-import * as ui from './modules/ui';
-ma.ui = ui;
-
-// import op and hooking them into the global ma variable
-import * as op from './modules/op';
-ma.op = op;
-
-// version functions
-ma.cli_tools_version = '__CLI_TOOLS_VERSION__';
-ma.version = () => {
-	return 'MA3 ' + Version() + ' | ' + _VERSION + ' | grandMA3-cli-tools ' + ma.cli_tools_version;
-};
+// expose ma as a global object so every sub-module is reachable from anywhere
+// (including the MA3 command line) as ma.<module>.<member>.
+//
+// NOTE: build a fresh table here instead of `ma = maModule`. Assigning the
+// bundled module's export table directly makes the global alias the bundler's
+// internal require-cache entry, which the MA3 plugin sandbox does not expose as
+// a usable global. A plain table behaves identically to the original code.
+declare global {
+	var ma: typeof maModule;
+}
+ma = { ...maModule };
 
 // ****************************************************************
 // plugin load entry point
 // ****************************************************************
 function Load() {
 	Echo(`grandMA3-cli-tools have been loaded...`);
-	Echo(ma.version());
+	ma.version(true);
 }
 
 Load();

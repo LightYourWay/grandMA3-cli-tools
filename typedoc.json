@@ -1,12 +1,8 @@
 {
 	"$schema": "https://typedoc.org/schema.json",
 	"plugin": ["typedoc-github-theme"],
-	"entryPoints": [
-		"src/modules/cli.ts",
-		"src/modules/utils.ts",
-		"src/modules/ui.ts",
-		"src/modules/op.ts"
-	],
+	"entryPoints": ["src/ma.ts"],
+	"alwaysCreateEntryPointModule": true,
 	"out": "docs",
 	"name": "grandMA3-cli-tools",
 	"readme": "README.md",
