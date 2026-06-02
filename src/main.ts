@@ -19,9 +19,9 @@ import * as op from './modules/op';
 ma.op = op;
 
 // version functions
-ma.tools_version = 'v0.2.1';
+ma.cli_tools_version = '__CLI_TOOLS_VERSION__';
 ma.version = () => {
-	return 'MA3 ' + Version() + ' | ' + _VERSION + ' | grandMA3-cli-tools ' + ma.tools_version;
+	return 'MA3 ' + Version() + ' | ' + _VERSION + ' | grandMA3-cli-tools ' + ma.cli_tools_version;
 };
 
 // ****************************************************************

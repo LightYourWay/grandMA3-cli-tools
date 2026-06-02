@@ -32,6 +32,9 @@ let result = (await readFile(bundle, 'utf8')).replace(
 end\n`,
 );
 
+// 1b. Inject the version from package.json.
+result = result.replace(/__CLI_TOOLS_VERSION__/g, `v${pkg.version}`);
+
 // 2. Prepend the LICENSE as Lua comments.
 const license = (await readFile('src/LICENSE', 'utf8'))
 	.split(/\r?\n/)
