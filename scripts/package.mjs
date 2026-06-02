@@ -21,7 +21,7 @@ const version = process.argv[2] ?? `v${pkg.version}`;
 
 const distDir = 'dist';
 const releaseDir = 'release';
-const zipName = path.join(releaseDir, `${name}-${version}.zip`);
+const zipName = path.join(releaseDir, `${name}_${version}.zip`);
 
 // Collect dist files into "<name>/<file>" zip entries.
 /** @type {Record<string, Uint8Array>} */
