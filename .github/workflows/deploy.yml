@@ -1,22 +1,24 @@
-name: Deploy
+name: Docs
 
 on:
   push:
-    tags:
-      - 'v*'
+    tags: ['v*']
   workflow_dispatch:
 
-# Least-privilege default; jobs widen as needed
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: pages
   cancel-in-progress: false
 
 jobs:
   build:
+    name: Build TypeDoc
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -30,55 +32,33 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build plugin
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Build
         run: npm run build
 
-      - name: Generate documentation
+      - name: Build documentation
         run: npm run docs
 
-      - name: Package plugin
-        run: npm run package -- "${{ github.ref_name }}"
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
 
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
           path: docs
 
-      - name: Upload release artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: plugin-zip
-          path: 'release/*.zip'
-          if-no-files-found: error
-
-  release:
-    needs: build
-    if: startsWith(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Download release artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: plugin-zip
-
-      - name: Create draft release
-        uses: softprops/action-gh-release@v3
-        with:
-          draft: true
-          files: '*.zip'
-
-  deploy-docs:
+  deploy:
+    name: Deploy to GitHub Pages
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5
