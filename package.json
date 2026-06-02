@@ -23,8 +23,8 @@
 	"homepage": "https://github.com/LightYourWay/grandMA3-cli-tools#readme",
 	"devDependencies": {
 		"fflate": "^0.8.3",
-		"grandma3-tsserver-plugin": "^0.2.2",
-		"grandma3-tstl-plugin": "^0.3.1",
+		"grandma3-tsserver-plugin": "^0.3.0",
+		"grandma3-tstl-plugin": "^0.5.0",
 		"grandma3-types": "^0.8.2",
 		"lua-types": "^2.14.1",
 		"prettier": "3.8.3",
