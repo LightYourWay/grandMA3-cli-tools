@@ -4,6 +4,9 @@ node_modules/
 # build output
 dist/
 
+# packaged release artifacts
+release/
+
 # generated / lockfiles
 package-lock.json
 

@@ -4,10 +4,11 @@
 	"description": "a feature rich utility for MA3 to allow operators to take advantage of LUA easily.",
 	"gma_version": "2.4.2.2",
 	"scripts": {
-		"build": "tstl && node build.js",
+		"build": "tstl && node scripts/build.mjs",
 		"dev": "tstl --watch",
 		"format": "prettier --write .",
-		"format:check": "prettier --check ."
+		"format:check": "prettier --check .",
+		"package": "node scripts/package.mjs"
 	},
 	"repository": {
 		"type": "git",
@@ -20,6 +21,7 @@
 	},
 	"homepage": "https://github.com/LightYourWay/grandMA3-cli-tools#readme",
 	"devDependencies": {
+		"fflate": "^0.8.3",
 		"grandma3-tsserver-plugin": "^0.2.2",
 		"grandma3-tstl-plugin": "^0.3.1",
 		"grandma3-types": "^0.8.2",
