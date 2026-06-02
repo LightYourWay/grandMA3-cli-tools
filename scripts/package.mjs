@@ -35,6 +35,9 @@ for (const file of await readdir(distDir)) {
 	entries[`${name}/${file}`] = data;
 }
 
+// Include the README so the release zip is self-documenting.
+entries[`${name}/README.md`] = await readFile('README.md');
+
 const zipped = zipSync(entries, { level: 9 });
 
 await mkdir(releaseDir, { recursive: true });
