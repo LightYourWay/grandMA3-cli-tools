@@ -1,6 +1,6 @@
 type Callable = (this: void, ...args: any[]) => any;
 
-const callable_G = (globalThis as unknown) as { [key: string]: Callable };
+const callable_G = globalThis as unknown as { [key: string]: Callable };
 
 let functions: { [key: string]: Callable } = {
 	ls: () => {
@@ -23,7 +23,7 @@ function execute(cmd: string[]): boolean | undefined {
 		if (func == 'exit') {
 			return true;
 		} else if (functions[func]) {
-			Printf('MA Tools:' + func + ' ' + cmd.join(' '));
+			Printf('grandMA3-cli-tools:' + func + ' ' + cmd.join(' '));
 			functions[func](...cmd);
 		} else if (callable_G[func]) {
 			Printf('grandMA3 Lua API: ' + func + ' ' + cmd.join(' '));

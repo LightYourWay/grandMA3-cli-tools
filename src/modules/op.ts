@@ -13,7 +13,7 @@ export function createNewPart(
 	// find next free part
 	let mySequence = findSequence(sequence) as Sequence;
 	let myCue = findCue(mySequence, cue) as Cue;
-	let myPart = myCue.Create() as Part;
+	let myPart = myCue.Create(myCue.Children().length + 1) as Part;
 	myPart.name = 'myNewPart';
 
 	// store

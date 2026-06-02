@@ -1,19 +1,25 @@
 export function gotoSequ(display_handle: number, Sequ: number): void {
-	let Sequence = Root().ShowData.DataPools.Default.Sequences[Sequ];
+	let Sequence = DataPool().Sequences[Sequ];
 	if (Sequence && Sequence.GetClass() == 'Sequence') {
-		let list = {} as ['str', string, number][];
+		let items: string[] = [];
 		Sequence.Children().forEach((Cue) => {
-			list.push(['str', Cue.Name, Cue.No]);
+			items.push(Cue.name);
 		});
 
-		let [currentCue, preselectedItem] = Sequence.CurrentChild();
+		let preselectedItem = '';
+		let currentCue = Sequence.CurrentChild();
 		if (currentCue) {
-			preselectedItem = currentCue.Name;
+			preselectedItem = currentCue.name;
 		}
-		let title = Sequence.Name;
-		let [selectedIndex, selectedValue] = PopupInput(title, display_handle, list, preselectedItem);
-		if (selectedIndex) {
-			Cmd('Goto Sequence %i Cue %s', Sequence.Index(), selectedValue);
+		let title = Sequence.name;
+		let [selectedIndex, selectedValue] = PopupInput({
+			title: title,
+			caller: GetDisplayByIndex(display_handle),
+			items: items,
+			selectedValue: preselectedItem,
+		});
+		if (selectedIndex !== 0) {
+			Cmd(`Goto Sequence ${Sequence.Index()} Cue ${selectedValue}`);
 		} else {
 			Echo('Goto canceled by user');
 		}

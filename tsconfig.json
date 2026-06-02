@@ -4,17 +4,21 @@
 		"target": "esnext",
 		"lib": ["esnext"],
 		"module": "commonjs",
-		"moduleResolution": "node",
-		"types": ["typescript-to-lua/language-extensions", "lua-types/5.3", "grandMA3-types"],
-		"strict": true
+		"types": ["@typescript-to-lua/language-extensions", "lua-types/5.3", "grandma3-types"],
+		"strict": true,
+		"plugins": [
+			{
+				"name": "grandma3-tsserver-plugin"
+			}
+		]
 	},
 	"exclude": ["./src/Plugin/"],
 	"tstl": {
 		"luaTarget": "5.3",
 		"noHeader": true,
-		"luaBundle": "dist/ma-tools.lua",
-		"luaBundleEntry": "src/ma-tools.ts",
+		"luaBundle": "dist/plugin.lua",
+		"luaBundleEntry": "src/main.ts",
 		"noImplicitSelf": true,
-		"luaPlugins": [{ "name": "grandMA3-tstl-plugin" }]
+		"luaPlugins": [{ "name": "grandma3-tstl-plugin" }]
 	}
 }

@@ -14,7 +14,7 @@ export function dump(o: any): string {
 }
 
 export function findSequence(identifier: number | string) {
-	return ShowData().DataPools.Default.Sequences[identifier];
+	return DataPool().Sequences[identifier];
 }
 
 export function findCue(sequence: Sequence, identifier: number | string) {

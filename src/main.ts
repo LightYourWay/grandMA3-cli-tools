@@ -6,25 +6,29 @@ ma = {};
 import { cli } from './modules/cli';
 ma.cli = cli;
 
-// import utils and hooking them into the global ma-tools variable
+// import utils and hooking them into the global ma variable
 import * as utils from './modules/utils';
 ma.utils = utils;
 
-// import ui and hooking them into the global ma-tools variable
+// import ui and hooking them into the global ma variable
 import * as ui from './modules/ui';
 ma.ui = ui;
+
+// import op and hooking them into the global ma variable
+import * as op from './modules/op';
+ma.op = op;
 
 // version functions
 ma.tools_version = 'v0.2.1';
 ma.version = () => {
-	return 'MA3 ' + Version() + ' | ' + _VERSION + ' | MA Tools ' + ma.tools_version;
+	return 'MA3 ' + Version() + ' | ' + _VERSION + ' | grandMA3-cli-tools ' + ma.tools_version;
 };
 
 // ****************************************************************
 // plugin load entry point
 // ****************************************************************
 function Load() {
-	Echo(`ma-tools have been loaded...`);
+	Echo(`grandMA3-cli-tools have been loaded...`);
 	Echo(ma.version());
 }
 
