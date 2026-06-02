@@ -4,6 +4,9 @@ node_modules/
 # build output
 dist/
 
+# generated documentation
+docs/
+
 # packaged release artifacts
 release/
 

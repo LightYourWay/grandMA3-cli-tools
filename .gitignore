@@ -121,5 +121,8 @@ dist
 # vscode
 /.vscode
 
+# TypeDoc generated documentation
+docs/
+
 # packaged release artifacts
 release/
