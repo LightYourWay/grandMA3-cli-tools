@@ -51,3 +51,9 @@ As long as the plugin development folder is located in the `lib_plugins` folder 
   <!-- - [ ] :bug: **BUG DESCRIPTION** &rarr; SOLUTION -->
   <!-- - [ ] :sparkles: MISSING FEATURE -->
   <!-- - [ ] :bulb: IDEA -->
+
+## License
+
+Copyright (C) Lukas Runge Veranstaltungstechnik
+
+This project is licensed under the GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later). See [COPYING.LESSER](COPYING.LESSER) and [COPYING](COPYING) for the full license texts.

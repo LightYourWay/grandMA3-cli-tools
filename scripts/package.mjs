@@ -38,6 +38,10 @@ for (const file of await readdir(distDir)) {
 // Include the README so the release zip is self-documenting.
 entries[`${name}/README.md`] = await readFile('README.md');
 
+// Include the LGPL-3.0 license texts so the release zip carries the project license.
+entries[`${name}/COPYING.LESSER`] = await readFile('COPYING.LESSER');
+entries[`${name}/COPYING`] = await readFile('COPYING');
+
 const zipped = zipSync(entries, { level: 9 });
 
 await mkdir(releaseDir, { recursive: true });
