@@ -1,6 +1,6 @@
 {
 	"name": "grandma3-cli-tools",
-	"version": "0.3.2",
+	"version": "0.3.3",
 	"description": "a feature rich utility for MA3 to allow operators to take advantage of LUA easily.",
 	"gma_version": "2.4.2.2",
 	"scripts": {
