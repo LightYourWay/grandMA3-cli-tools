@@ -1,57 +1,15 @@
 // @ts-check
 
-// Post-processes the tstl bundle into the final MA3 plugin:
-//   1. inject the version placeholder from package.json
-//   2. prepend the project LICENSE as Lua comments
-//   3. rename the bundle to <pluginname>.lua and emit the matching <pluginname>.xml
+// Post-processes the tstl bundle: substitute the version placeholder
+// (`__CLI_TOOLS_VERSION__`) with `v<package.json version>`. The Lua bundle,
+// XML, and license prepend are handled by grandma3-tstl-plugin itself.
 
-import { readFile, writeFile, rm } from 'node:fs/promises';
-import path from 'node:path';
+import { readFile, writeFile } from 'node:fs/promises';
 
 const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
-const name = pkg.name;
+const bundle = `dist/${pkg.name}.lua`;
 
-const bundle = 'dist/plugin.lua';
+const lua = await readFile(bundle, 'utf8');
+await writeFile(bundle, lua.replace(/__CLI_TOOLS_VERSION__/g, `v${pkg.version}`), 'utf8');
 
-// 1. Inject the version from package.json.
-let result = (await readFile(bundle, 'utf8')).replace(/__CLI_TOOLS_VERSION__/g, `v${pkg.version}`);
-
-// 2. Prepend the LICENSE as Lua comments.
-const license = (await readFile('src/LICENSE', 'utf8'))
-	.split(/\r?\n/)
-	.map(
-		(line) =>
-			`-- ${line.replace('[year]', `${new Date().getFullYear()}`).replace('[fullname]', pkg.author)}`,
-	)
-	.join('\n');
-result = `${license}\n${result}`;
-
-// 3. Write the bundle out under the plugin name and drop the original.
-await writeFile(`dist/${name}.lua`, result, 'utf8');
-await rm(bundle);
-
-// 4. Emit the plugin XML, pointing Path at the dist location.
-const cwd = path.parse(process.cwd());
-const buildPath = path.join(cwd.dir, cwd.base, 'dist').replace(/\\/g, '/');
-
-let xmlPath = `/${cwd.base}/dist`;
-const inMAStructure = buildPath.includes('MALightingTechnology');
-const inPluginsFolder = buildPath.includes('plugins') || buildPath.includes('lib_plugins');
-if (inMAStructure && inPluginsFolder) {
-	xmlPath = buildPath.replace(/.+?(?:\/plugins|\/lib_plugins)(.+)/g, '$1');
-}
-
-await writeFile(
-	`dist/${name}.xml`,
-	`<?xml version="1.0" encoding="UTF-8"?>
-<GMA3 DataVersion="${pkg.gma_version}">
-    <Plugin Name="${name}" Version="${pkg.version}" Author="${pkg.author}" Path="${xmlPath}">
-        <ComponentLua Name="${name}" FileName="${name}.lua">
-        </ComponentLua>
-    </Plugin>
-</GMA3>
-`,
-	'utf8',
-);
-
-console.log(`Built dist/${name}.lua and dist/${name}.xml`);
+console.log(`Injected version v${pkg.version} into ${bundle}`);

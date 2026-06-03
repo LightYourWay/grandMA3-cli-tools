@@ -16,9 +16,9 @@
 	"tstl": {
 		"luaTarget": "5.3",
 		"noHeader": true,
-		"luaBundle": "dist/plugin.lua",
+		"luaBundle": "dist",
 		"luaBundleEntry": "src/main.ts",
 		"noImplicitSelf": true,
-		"luaPlugins": [{ "name": "grandma3-tstl-plugin" }]
+		"luaPlugins": [{ "name": "grandma3-tstl-plugin", "license": "src/LICENSE" }]
 	}
 }
