@@ -4,7 +4,7 @@
 		"target": "esnext",
 		"lib": ["esnext"],
 		"module": "commonjs",
-		"types": ["@typescript-to-lua/language-extensions", "lua-types/5.3", "grandma3-types"],
+		"types": ["@typescript-to-lua/language-extensions", "lua-types/5.4", "grandma3-types"],
 		"strict": true,
 		"plugins": [
 			{
@@ -14,7 +14,7 @@
 	},
 	"exclude": ["./src/Plugin/"],
 	"tstl": {
-		"luaTarget": "5.3",
+		"luaTarget": "5.4",
 		"noHeader": true,
 		"luaBundle": "dist",
 		"luaBundleEntry": "src/main.ts",
