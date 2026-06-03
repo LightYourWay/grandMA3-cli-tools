@@ -1,7 +1,7 @@
 // @ts-check
 
 // Post-processes the tstl bundle into the final MA3 plugin:
-//   1. patch the __TS__ArrayForEach helper (tstl's version misbehaves under MA3's Lua)
+//   1. inject the version placeholder from package.json
 //   2. prepend the project LICENSE as Lua comments
 //   3. rename the bundle to <pluginname>.lua and emit the matching <pluginname>.xml
 
@@ -13,27 +13,8 @@ const name = pkg.name;
 
 const bundle = 'dist/plugin.lua';
 
-// 1. Patch the array-iteration helper emitted by tstl.
-let result = (await readFile(bundle, 'utf8')).replace(
-	/function __TS__ArrayForEach(.+\n)+/g,
-	`function __TS__ArrayForEach(arr, callbackFn)
-	do
-		local i = 0
-		local arrLength = #arr
-		while i < arrLength do
-			if arr[i + 1] then
-				callbackFn(_G, arr[i + 1], i, arr)
-			else
-				arrLength = arrLength + 1
-			end
-			i = i + 1
-		end
-	end
-end\n`,
-);
-
-// 1b. Inject the version from package.json.
-result = result.replace(/__CLI_TOOLS_VERSION__/g, `v${pkg.version}`);
+// 1. Inject the version from package.json.
+let result = (await readFile(bundle, 'utf8')).replace(/__CLI_TOOLS_VERSION__/g, `v${pkg.version}`);
 
 // 2. Prepend the LICENSE as Lua comments.
 const license = (await readFile('src/LICENSE', 'utf8'))
